@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ferrero-dark: #2D1B0E;
+  --color-ferrero-brown: #5C3317;
+  --color-ferrero-brown-light: #8B4513;
+  --color-ferrero-brown-medium: #A0522D;
+  --color-ferrero-gold: #D4A843;
+  --color-ferrero-gold-dark: #C5961B;
+  --color-ferrero-cream: #FAF3E8;
+  --color-ferrero-cream-light: #FFF8F0;
+  --color-success: #2D8B46;
+  --color-warning: #D4A843;
+  --color-danger: #C0392B;
+  --color-info: #3B82F6;
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-800: #1f2937;
+}
+
+
+body {
+  background-color: #FAF3E8;
+  color: #2D1B0E;
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  min-width: 0;
+  width: 100%;
+}
+
+.recharts-responsive-container {
+  min-width: 0 !important;
+}
+
+main .grid > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Custom scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #D4A843;
+  border-radius: 4px;
+}

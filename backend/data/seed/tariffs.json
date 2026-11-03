@@ -1,0 +1,23 @@
+[
+    {
+        "origin_country": "Turkey",
+        "destination_region": "EU",
+        "effective_date": "2024-01-01",
+        "rate_percent": 3.2,
+        "notes": "Standard import tariff"
+    },
+    {
+        "origin_country": "USA",
+        "destination_region": "EU",
+        "effective_date": "2024-01-01",
+        "rate_percent": 5.1,
+        "notes": "Standard import tariff"
+    },
+    {
+        "origin_country": "USA",
+        "destination_region": "EU",
+        "effective_date": "2025-01-01",
+        "rate_percent": 3.2,
+        "notes": "Reduced rate post-negotiation"
+    }
+]
