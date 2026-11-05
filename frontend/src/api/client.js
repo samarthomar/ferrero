@@ -1,6 +1,7 @@
 import axios from 'axios';
 import liveData from '../data/liveData.json';
 import { runScenarioLocally } from '../services/scenarioEngine';
+import { runAdvisorLocally } from '../services/advisorEngine';
 
 const client = axios.create({
   baseURL: 'http://localhost:8000/api',
@@ -16,7 +17,7 @@ client.interceptors.response.use(
   }
 );
 
-// Mock wrapper — tries live API first, falls back to baked-in live data
+// Mock wrapper — tries live API first, falls back to function or baked-in live data
 const mockWrapper = async (call, mockData) => {
   try {
     return await call();
@@ -51,9 +52,15 @@ export const api = {
   getFrostRisk: () => mockWrapper(() => client.get('/weather/frost-risk'), liveData.frost_risk),
   getHarvestCalendar: () => mockWrapper(() => client.get('/weather/harvest-calendar'), liveData.harvest_calendar),
 
-  // Advisor
-  recommendAction: (query) => mockWrapper(() => client.post('/advisor/recommend', {query}), liveData.advisor_buy),
-  getAdvisorRecommendation: (query) => mockWrapper(() => client.post('/advisor/recommend', { query }), liveData.advisor_buy),
+  // Advisor — uses client-side rule & calculation engine matching Python backend
+  recommendAction: (query) => mockWrapper(
+    () => client.post('/advisor/recommend', { query }),
+    () => runAdvisorLocally(query)
+  ),
+  getAdvisorRecommendation: (query) => mockWrapper(
+    () => client.post('/advisor/recommend', { query }),
+    () => runAdvisorLocally(query)
+  ),
   getQuickActions: () => mockWrapper(() => client.get('/advisor/quick-actions'), liveData.quick_actions),
   getRisks: () => mockWrapper(() => client.get('/advisor/risks'), liveData.risks),
 
