@@ -1,5 +1,6 @@
 import axios from 'axios';
 import liveData from '../data/liveData.json';
+import { runScenarioLocally } from '../services/scenarioEngine';
 
 const client = axios.create({
   baseURL: 'http://localhost:8000/api',
@@ -21,7 +22,7 @@ const mockWrapper = async (call, mockData) => {
     return await call();
   } catch (error) {
     console.warn('Using mock fallback for:', error.config?.url || 'unknown endpoint');
-    return mockData;
+    return typeof mockData === 'function' ? mockData() : mockData;
   }
 };
 
@@ -37,8 +38,11 @@ export const api = {
   getMarketTrends: () => mockWrapper(() => client.get('/market/trends'), liveData.trends),
   getMarketNews: () => mockWrapper(() => client.get('/market/news'), liveData.news),
 
-  // Scenarios
-  simulateScenario: (params) => mockWrapper(() => client.post('/scenarios/simulate', params), liveData.scenario_default),
+  // Scenarios — uses client-side engine when backend is unavailable
+  simulateScenario: (params) => mockWrapper(
+    () => client.post('/scenarios/simulate', params),
+    () => runScenarioLocally(params)
+  ),
   getScenarioPresets: () => mockWrapper(() => client.get('/scenarios/presets'), liveData.presets),
 
   // Weather
